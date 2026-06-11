@@ -1,105 +1,292 @@
-<!doctype html>
-<html
-  lang="en"
-  data-ws-project="1b3f9c4c-2057-40d9-800e-f4c711ae5063"
-  data-ws-last-published="2026-06-11T21:58:45.018Z"
->
-  <head>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/assets/static/app_generated_index-6937cd5a.Mg1lXq_j.css"
-    />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta property="og:url" content="https://url/" />
-    <meta property="og:title" content="Home" />
-    <meta property="og:type" content="website" />
-    <title>Home</title>
-  </head>
-  <body class="w-element">
-    <img
-      alt=""
-      class="w-image"
-      src="https://i.pinimg.com/736x/d6/c9/95/d6c9956fd36c5ef3f75d029d8f17d7a6.jpg"
-      decoding="async"
-      loading="lazy"
-    />
-    <h1 class="w-element">sunday</h1>
-    <div class="w-element c1w5onp2">
-      <table
-        class="w-element cbhqhv8 c101ahr9 c1wxzwlq c731frr c9g6of2 c1t6ukyg c1nsih2v cjtntjq csy74hk c12p2mou csybdy7"
-      >
-        <thead class="w-element">
-          <tr
-            class="w-element c731frr c9g6of2 c1t6ukyg c1nsih2v cjtntjq csy74hk ckfz8fk csybdy7"
-          >
-            <th class="w-element cqniv6e c1meto3i c1sw21av">상품명</th>
-            <th class="w-element cqniv6e c1meto3i c1sw21av">설명</th>
-            <th class="w-element cl4elkz c1meto3i c1sw21av">가격</th>
-          </tr>
-        </thead>
-        <tbody class="w-element">
-          <tr class="w-element">
-            <td class="w-element c1meto3i c1sw21av">Basic Plan</td>
-            <td class="w-element c1meto3i c1sw21av">개인용 플랜</td>
-            <td class="w-element cl4elkz c1meto3i c1sw21av">₩10,000</td>
-          </tr>
-          <tr class="w-element">
-            <td class="w-element c1meto3i c1sw21av">Pro Plan</td>
-            <td class="w-element c1meto3i c1sw21av">전문가용 플랜</td>
-            <td class="w-element cl4elkz c1meto3i c1sw21av">₩30,000</td>
-          </tr>
-          <tr class="w-element">
-            <td class="w-element c1meto3i c1sw21av">Enterprise</td>
-            <td class="w-element c1meto3i c1sw21av">기업용 플랜</td>
-            <td class="w-element cl4elkz c1meto3i c1sw21av">문의</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <script id="vike_pageContext" type="application/json">
-      {
-        "_urlRewrite": null,
-        "pageId": "/pages/index",
-        "routeParams": {},
-        "data": {
-          "url": "https://url/",
-          "system": {
-            "params": {},
-            "search": {},
-            "origin": "https://url",
-            "pathname": "/"
-          },
-          "resources": {},
-          "pageMeta": {
-            "title": "Home",
-            "description": "!undefined",
-            "excludePageFromSearch": "!undefined",
-            "language": "!undefined",
-            "socialImageAssetName": "!undefined",
-            "socialImageUrl": "!undefined",
-            "status": "!undefined",
-            "redirect": "!undefined",
-            "content": "!undefined",
-            "custom": []
-          }
+html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 정보 페이지</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: f4f7f6;
+            color: 333;
         }
-      }
+
+        / 상단: 이름별 버튼형 스탯 (테이블 형식) /
+        .stats-container {
+            margin-bottom: 30px;
+            background-color: ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .stats-table th,
+        .stats-table td {
+            border: 1px solid ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .stats-table th {
+            background-color: e8f0f8;
+            color: 0056b3;
+            font-weight: bold;
+        }
+
+        .stats-table tr:nth-child(even) {
+            background-color: f9f9f9;
+        }
+
+        .stats-table button {
+            background-color: 007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .stats-table button:hover {
+            background-color: 0056b3;
+        }
+
+        / 중단: 이름별 카드형태 (클릭 시 확대/편집) /
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 250px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden; / 확대 시 내용이 넘치지 않도록 /
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: 0056b3;
+        }
+
+        .card-content {
+            font-size: 14px;
+            color: 555;
+        }
+
+        / 카드 클릭 시 확대/편집 모드 (JavaScript로 토글) /
+        .card.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.2); / 확대 /
+            z-index: 1000; / 다른 요소 위에 표시 /
+            width: 80%;
+            max-width: 500px;
+            height: auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            overflow-y: auto; / 내용이 많을 경우 스크롤 /
+        }
+
+        .card.expanded .card-header {
+            font-size: 24px;
+        }
+
+        .card.expanded .card-content {
+            font-size: 16px;
+        }
+
+        .edit-mode textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box; / 패딩과 테두리가 너비에 포함되도록 /
+            margin-top: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: aaa;
+        }
+
+        .close-btn:hover {
+            color: 333;
+        }
+
+        / 하단: 1줄짜리 Sheet /
+        .sheet-container {
+            background-color: e8f0f8;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 16px;
+            color: 0056b3;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stats-container">
+        <h2>스탯 정보</h2>
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>스탯 1</th>
+                    <th>스탯 2</th>
+                    <th>상세 보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>홍길동</td>
+                    <td>100</td>
+                    <td>85</td>
+                    <td><button onclick="viewDetails('홍길동')">보기</button></td>
+                </tr>
+                <tr>
+                    <td>김철수</td>
+                    <td>90</td>
+                    <td>70</td>
+                    <td><button onclick="viewDetails('김철수')">보기</button></td>
+                </tr>
+                <tr>
+                    <td>이영희</td>
+                    <td>80</td>
+                    <td>95</td>
+                    <td><button onclick="viewDetails('이영희')">보기</button></td>
+                </tr>
+                <!-- 더 많은 이름과 스탯 추가 가능 -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="cards-container">
+        <div class="card" id="card-hong">
+            <span class="close-btn" onclick="toggleCardExpand(this)">&times;</span>
+            <div class="card-header">홍길동</div>
+            <div class="card-content">
+                <p><strong>직업:</strong> 모험가</p>
+                <p><strong>레벨:</strong> 10</p>
+                <p><strong>능력치:</strong> 힘 15, 민첩 12, 지능 10</p>
+                <p><strong>소개:</strong> 용감하고 정의로운 모험가입니다.</p>
+            </div>
+            <div class="edit-mode">
+                <textarea placeholder="여기에 편집할 내용을 입력하세요...">직업: 모험가
+레벨: 10
+능력치: 힘 15, 민첩 12, 지능 10
+소개: 용감하고 정의로운 모험가입니다.</textarea>
+            </div>
+        </div>
+
+        <div class="card" id="card-kim">
+            <span class="close-btn" onclick="toggleCardExpand(this)">&times;</span>
+            <div class="card-header">김철수</div>
+            <div class="card-content">
+                <p><strong>직업:</strong> 마법사</p>
+                <p><strong>레벨:</strong> 8</p>
+                <p><strong>능력치:</strong> 힘 8, 민첩 10, 지능 18</p>
+                <p><strong>소개:</strong> 신비로운 마법을 연구하는 학자입니다.</p>
+            </div>
+            <div class="edit-mode">
+                <textarea placeholder="여기에 편집할 내용을 입력하세요...">직업: 마법사
+레벨: 8
+능력치: 힘 8, 민첩 10, 지능 18
+소개: 신비로운 마법을 연구하는 학자입니다.</textarea>
+            </div>
+        </div>
+
+        <div class="card" id="card-lee">
+            <span class="close-btn" onclick="toggleCardExpand(this)">&times;</span>
+            <div class="card-header">이영희</div>
+            <div class="card-content">
+                <p><strong>직업:</strong> 궁수</p>
+                <p><strong>레벨:</strong> 9</p>
+                <p><strong>능력치:</strong> 힘 12, 민첩 18, 지능 9</p>
+                <p><strong>소개:</strong> 뛰어난 활솜씨를 가진 민첩한 궁수입니다.</p>
+            </div>
+            <div class="edit-mode">
+                <textarea placeholder="여기에 편집할 내용을 입력하세요...">직업: 궁수
+레벨: 9
+능력치: 힘 12, 민첩 18, 지능 9
+소개: 뛰어난 활솜씨를 가진 민첩한 궁수입니다.</textarea>
+            </div>
+        </div>
+        <!-- 더 많은 카드 추가 가능 -->
+    </div>
+
+    <div class="sheet-container">
+        <p>오늘의 요약 시트: 모든 사용자의 활동이 기록됩니다.</p>
+    </div>
+
+    <script>
+        function viewDetails(name) {
+            alert(name + "님의 상세 정보를 보려면 해당 카드를 클릭하세요.");
+            // 실제 구현에서는 해당 이름의 카드를 찾아 스크롤하거나 확대하는 로직 추가
+        }
+
+        function toggleCardExpand(element) {
+            const card = element.closest('.card');
+            card.classList.toggle('expanded');
+
+            // 확대/축소 시 텍스트 영역 표시/숨김
+            const textarea = card.querySelector('.edit-mode textarea');
+            if (card.classList.contains('expanded')) {
+                textarea.style.display = 'block'; // 편집 모드 표시
+            } else {
+                textarea.style.display = 'none'; // 일반 모드에서는 숨김
+            }
+        }
+
+        // 초기 로드 시 편집 모드 텍스트 영역 숨김
+        document.querySelectorAll('.card .edit-mode textarea').forEach(textarea => {
+            textarea.style.display = 'none';
+        });
+
+        // 카드를 클릭했을 때 확대/축소 및 편집 모드 토글
+        document.querySelectorAll('.card:not(.expanded)').forEach(card => {
+            card.addEventListener('click', function() {
+                // 확대/축소 버튼이 아닌 카드 본문을 클릭했을 때만
+                if (event.target.className !== 'close-btn') {
+                    toggleCardExpand(this.querySelector('.close-btn'));
+                }
+            });
+        });
     </script>
-    <script id="vike_globalContext" type="application/json">
-      {}
-    </script>
-    <script
-      src="/assets/entries/entry-server-routing.CfKFHJe7.js"
-      type="module"
-      async
-    ></script>
-    <link
-      rel="modulepreload"
-      href="/assets/entries/pages_index.CPD2AcSL.js"
-      as="script"
-      type="text/javascript"
-    />
-  </body>
+
+</body>
 </html>
