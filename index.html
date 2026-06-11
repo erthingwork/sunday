@@ -4,285 +4,168 @@ html
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사용자 정보 페이지</title>
+    <title>웹페이지 레이아웃</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
-            background-color: f4f7f6;
-            color: 333;
+            margin: 0;
+            font-family: sans-serif;
         }
-
-        / 상단: 이름별 버튼형 스탯 (테이블 형식) /
-        .stats-container {
-            margin-bottom: 30px;
-            background-color: ffffff;
+        .wide-image {
+            width: 100%;
+            height: 300px; / 이미지 높이 조절 /
+            background-color: ccc; / 이미지 없을 경우 배경색 /
+            background-size: cover;
+            background-position: center;
+        }
+        .stats-section {
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .stats-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .stats-table th,
-        .stats-table td {
-            border: 1px solid ddd;
-            padding: 12px 15px;
-            text-align: left;
-        }
-
-        .stats-table th {
-            background-color: e8f0f8;
-            color: 0056b3;
-            font-weight: bold;
-        }
-
-        .stats-table tr:nth-child(even) {
-            background-color: f9f9f9;
-        }
-
-        .stats-table button {
-            background-color: 007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-            width: 100%;
+            background-color: f4f4f4;
             text-align: center;
         }
-
-        .stats-table button:hover {
+        .stats-section h2 {
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 8px 15px;
+            background-color: 007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .stat-item:hover {
             background-color: 0056b3;
         }
-
-        / 중단: 이름별 카드형태 (클릭 시 확대/편집) /
-        .cards-container {
+        .cards-section {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
             justify-content: center;
-            margin-bottom: 30px;
+            padding: 30px 10px;
+            gap: 20px;
         }
-
         .card {
-            background-color: ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
             width: 250px;
+            border: 1px solid ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden; / 확대 시 내용이 넘치지 않도록 /
         }
-
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-
         .card-header {
-            font-size: 18px;
+            padding: 15px;
+            background-color: f9f9f9;
+            border-bottom: 1px solid ddd;
             font-weight: bold;
-            margin-bottom: 10px;
-            color: 0056b3;
         }
-
         .card-content {
-            font-size: 14px;
-            color: 555;
+            padding: 15px;
         }
-
-        / 카드 클릭 시 확대/편집 모드 (JavaScript로 토글) /
-        .card.expanded {
+        .editable-card.expanded {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1.2); / 확대 /
-            z-index: 1000; / 다른 요소 위에 표시 /
-            width: 80%;
-            max-width: 500px;
-            height: auto;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            overflow-y: auto; / 내용이 많을 경우 스크롤 /
+            transform: translate(-50%, -50%) scale(1.2);
+            z-index: 1000;
+            width: 500px; / 확대 시 너비 /
+            height: auto; / 확대 시 높이 자동 /
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
-
-        .card.expanded .card-header {
-            font-size: 24px;
-        }
-
-        .card.expanded .card-content {
-            font-size: 16px;
-        }
-
-        .edit-mode textarea {
+        .editable-card.expanded .card-content textarea {
             width: 100%;
-            min-height: 100px;
+            height: 150px; / 편집 가능한 영역 높이 /
             padding: 10px;
             border: 1px solid ccc;
             border-radius: 5px;
-            font-size: 14px;
-            box-sizing: border-box; / 패딩과 테두리가 너비에 포함되도록 /
-            margin-top: 10px;
+            resize: vertical;
+            box-sizing: border-box;
         }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            color: aaa;
-        }
-
-        .close-btn:hover {
-            color: 333;
-        }
-
-        / 하단: 1줄짜리 Sheet /
-        .sheet-container {
-            background-color: e8f0f8;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        .sheet-section {
+            padding: 15px;
+            background-color: 333;
+            color: white;
             text-align: center;
-            font-size: 16px;
-            color: 0056b3;
-            font-weight: bold;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 
-    <div class="stats-container">
-        <h2>스탯 정보</h2>
-        <table class="stats-table">
-            <thead>
-                <tr>
-                    <th>이름</th>
-                    <th>스탯 1</th>
-                    <th>스탯 2</th>
-                    <th>상세 보기</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>홍길동</td>
-                    <td>100</td>
-                    <td>85</td>
-                    <td><button onclick="viewDetails('홍길동')">보기</button></td>
-                </tr>
-                <tr>
-                    <td>김철수</td>
-                    <td>90</td>
-                    <td>70</td>
-                    <td><button onclick="viewDetails('김철수')">보기</button></td>
-                </tr>
-                <tr>
-                    <td>이영희</td>
-                    <td>80</td>
-                    <td>95</td>
-                    <td><button onclick="viewDetails('이영희')">보기</button></td>
-                </tr>
-                <!-- 더 많은 이름과 스탯 추가 가능 -->
-            </tbody>
-        </table>
+    <div class="wide-image">
+        <!-- 최상단 꽉찬 와이드 이미지 영역 -->
+        <!-- background-image 스타일을 div에 직접 적용하거나, img 태그 사용 -->
     </div>
 
-    <div class="cards-container">
-        <div class="card" id="card-hong">
-            <span class="close-btn" onclick="toggleCardExpand(this)">&times;</span>
-            <div class="card-header">홍길동</div>
+    <div class="stats-section">
+        <h2>이름별 스탯</h2>
+        <span class="stat-item">스탯 1</span>
+        <span class="stat-item">스탯 2</span>
+        <span class="stat-item">스탯 3</span>
+        <span class="stat-item">스탯 4</span>
+    </div>
+
+    <div class="cards-section">
+        <div class="card editable-card">
+            <div class="card-header">이름 A</div>
             <div class="card-content">
-                <p><strong>직업:</strong> 모험가</p>
-                <p><strong>레벨:</strong> 10</p>
-                <p><strong>능력치:</strong> 힘 15, 민첩 12, 지능 10</p>
-                <p><strong>소개:</strong> 용감하고 정의로운 모험가입니다.</p>
-            </div>
-            <div class="edit-mode">
-                <textarea placeholder="여기에 편집할 내용을 입력하세요...">직업: 모험가
-레벨: 10
-능력치: 힘 15, 민첩 12, 지능 10
-소개: 용감하고 정의로운 모험가입니다.</textarea>
+                <p>카드 내용 1</p>
+                <p>카드 내용 2</p>
             </div>
         </div>
-
-        <div class="card" id="card-kim">
-            <span class="close-btn" onclick="toggleCardExpand(this)">&times;</span>
-            <div class="card-header">김철수</div>
+        <div class="card editable-card">
+            <div class="card-header">이름 B</div>
             <div class="card-content">
-                <p><strong>직업:</strong> 마법사</p>
-                <p><strong>레벨:</strong> 8</p>
-                <p><strong>능력치:</strong> 힘 8, 민첩 10, 지능 18</p>
-                <p><strong>소개:</strong> 신비로운 마법을 연구하는 학자입니다.</p>
-            </div>
-            <div class="edit-mode">
-                <textarea placeholder="여기에 편집할 내용을 입력하세요...">직업: 마법사
-레벨: 8
-능력치: 힘 8, 민첩 10, 지능 18
-소개: 신비로운 마법을 연구하는 학자입니다.</textarea>
+                <p>카드 내용 A</p>
+                <p>카드 내용 B</p>
             </div>
         </div>
-
-        <div class="card" id="card-lee">
-            <span class="close-btn" onclick="toggleCardExpand(this)">&times;</span>
-            <div class="card-header">이영희</div>
+        <div class="card editable-card">
+            <div class="card-header">이름 C</div>
             <div class="card-content">
-                <p><strong>직업:</strong> 궁수</p>
-                <p><strong>레벨:</strong> 9</p>
-                <p><strong>능력치:</strong> 힘 12, 민첩 18, 지능 9</p>
-                <p><strong>소개:</strong> 뛰어난 활솜씨를 가진 민첩한 궁수입니다.</p>
-            </div>
-            <div class="edit-mode">
-                <textarea placeholder="여기에 편집할 내용을 입력하세요...">직업: 궁수
-레벨: 9
-능력치: 힘 12, 민첩 18, 지능 9
-소개: 뛰어난 활솜씨를 가진 민첩한 궁수입니다.</textarea>
+                <p>카드 내용 X</p>
+                <p>카드 내용 Y</p>
             </div>
         </div>
         <!-- 더 많은 카드 추가 가능 -->
     </div>
 
-    <div class="sheet-container">
-        <p>오늘의 요약 시트: 모든 사용자의 활동이 기록됩니다.</p>
+    <div class="sheet-section">
+        <span>한 줄 요약 또는 중요 정보 시트</span>
     </div>
 
     <script>
-        function viewDetails(name) {
-            alert(name + "님의 상세 정보를 보려면 해당 카드를 클릭하세요.");
-            // 실제 구현에서는 해당 이름의 카드를 찾아 스크롤하거나 확대하는 로직 추가
-        }
-
-        function toggleCardExpand(element) {
-            const card = element.closest('.card');
-            card.classList.toggle('expanded');
-
-            // 확대/축소 시 텍스트 영역 표시/숨김
-            const textarea = card.querySelector('.edit-mode textarea');
-            if (card.classList.contains('expanded')) {
-                textarea.style.display = 'block'; // 편집 모드 표시
-            } else {
-                textarea.style.display = 'none'; // 일반 모드에서는 숨김
-            }
-        }
-
-        // 초기 로드 시 편집 모드 텍스트 영역 숨김
-        document.querySelectorAll('.card .edit-mode textarea').forEach(textarea => {
-            textarea.style.display = 'none';
-        });
-
-        // 카드를 클릭했을 때 확대/축소 및 편집 모드 토글
-        document.querySelectorAll('.card:not(.expanded)').forEach(card => {
+        document.querySelectorAll('.editable-card').forEach(card => {
             card.addEventListener('click', function() {
-                // 확대/축소 버튼이 아닌 카드 본문을 클릭했을 때만
-                if (event.target.className !== 'close-btn') {
-                    toggleCardExpand(this.querySelector('.close-btn'));
+                // 다른 카드가 이미 확대되어 있는지 확인
+                const expandedCard = document.querySelector('.expanded');
+                if (expandedCard && expandedCard !== this) {
+                    expandedCard.classList.remove('expanded');
+                    // 확대된 카드의 내용을 일반 텍스트로 되돌립니다.
+                    const contentDiv = expandedCard.querySelector('.card-content');
+                    contentDiv.innerHTML = contentDiv.dataset.originalContent;
+                }
+
+                this.classList.toggle('expanded');
+
+                if (this.classList.contains('expanded')) {
+                    const contentDiv = this.querySelector('.card-content');
+                    // 원본 내용을 저장합니다.
+                    contentDiv.dataset.originalContent = contentDiv.innerHTML;
+                    // 편집 가능한 textarea로 변경합니다.
+                    contentDiv.innerHTML = <textarea>${contentDiv.textContent.trim()}</textarea>;
+                } else {
+                    // 확대 해제 시 textarea의 내용을 일반 텍스트로 다시 표시합니다.
+                    const contentDiv = this.querySelector('.card-content');
+                    const textarea = contentDiv.querySelector('textarea');
+                    if (textarea) {
+                        contentDiv.innerHTML = textarea.value;
+                    }
                 }
             });
         });
