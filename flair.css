@@ -1,0 +1,32 @@
+.raid {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.raid-title {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.flair {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background-color: #e74c3c; /* 빨간색 배지 */
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
