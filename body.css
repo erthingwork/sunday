@@ -3,3 +3,9 @@ body {
     font-family: sans-serif;
     background-color: #ff8b0f;
 }
+
+.stats-section {
+    padding: 10px;
+    background-color: #59B292;
+    text-align: center;
+}
