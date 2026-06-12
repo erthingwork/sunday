@@ -6,9 +6,10 @@
   margin: 50px;
 }
 .card {
-  flex: 0 0 calc(33.333% - 20px);
+  flex: 0 0 30%;
   position: relative;
-  max-width: 300px;
+  /* max-width: 300px; */
+  max-width: 30%;
   height: 200px;
   background-color: #f2f2f2;
   padding: 20px;
